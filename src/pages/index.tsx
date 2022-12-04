@@ -22,7 +22,7 @@ export default function Home() {
         <Image src={Logotype} alt="bok.xyz" data-aos="fade-up" />
       </div>
       <section className="mt-16">
-        <h2 className="text-primary text-4xl xl:text-6xl" data-aos="fade-up">
+        <h2 className="text-primary text-4xl xl:text-6xl font-bold" data-aos="fade-up">
           What is Bok.xyz?
         </h2>
         <p className="mt-4 text-sm xl:text-base" data-aos="fade-up">
