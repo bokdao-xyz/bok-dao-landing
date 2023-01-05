@@ -59,6 +59,9 @@ export default function Home() {
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
           {t("desc4")}
         </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc5")}
+        </p>
       </section>
       <section className="mt-16">
         <h2
@@ -68,7 +71,7 @@ export default function Home() {
           {t("title3")}
         </h2>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc5")}
+          {t("desc6")}
         </p>
       </section>
     </Layout>
