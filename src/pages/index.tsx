@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -70,8 +71,42 @@ export default function Home() {
         >
           {t("title3")}
         </h2>
+        <Link href="mint">
+          <button
+            className="mt-8 pl-8 pr-8 pt-3 pb-3 text-xl border hover:bg-primary text-white hover:text-zinc-100"
+            data-aos="fade-up"
+          >
+            {t("desc6")}
+          </button>
+        </Link>
+      </section>
+      <section className="mt-16">
+        <h2
+          className="text-primary text-4xl xl:text-6xl font-bold"
+          data-aos="fade-up"
+        >
+          {t("title4")}
+        </h2>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc6")}
+          {t("desc7")}
+        </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc8")}
+        </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc9")}
+        </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc10")}
+        </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc11")}
+        </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc12")}
+        </p>
+        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+          {t("desc13")}
         </p>
       </section>
     </Layout>
