@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import { ethers } from "ethers";
 import { InjectedConnector } from "@web3-react/injected-connector";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
@@ -13,6 +14,10 @@ import { shortenAddress } from "../../utils";
 import Layout from "../../components/layout";
 
 import MintImg from "/public/logo.png";
+import BokDaoMint from "../../utils/BokDAONFTV1.json";
+import useDidMountEffect from "../../hooks/useDidMountEffect";
+import Alert from "../../components/Alert";
+import Loading from "../../components/Loading";
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
@@ -21,6 +26,11 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 export default function Home() {
+  const injectedConnector = new InjectedConnector({
+    supportedChainIds: [1, 3, 4, 5, 42],
+  });
+  const { account, activate, active, library, chainId } =
+    useWeb3React<Web3Provider>();
   const { t } = useTranslation("common");
 
   const [days, setDays] = useState(0);
@@ -28,15 +38,50 @@ export default function Home() {
   const [mintues, setMintuess] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  const injectedConnector = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5, 42],
-  });
-  const { account, activate, active } = useWeb3React<Web3Provider>();
+  const [isTx, setTx] = useState(false);
+  const [isAlert, setAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState("");
+
+  const mintNFT = async () => {
+    try {
+      setTx(true);
+      const contracAddress = "0xC691eCC464568a62b9bf393499343cb612645459";
+      const contract = new ethers.Contract(
+        contracAddress,
+        BokDaoMint.abi,
+        library?.getSigner()
+      );
+
+      const nftTxn = await contract.mintNFT({
+        gasLimit: 3000000,
+        value: ethers.utils.parseEther("0.001"),
+      });
+
+      await nftTxn.wait();
+      setTx(false);
+      setAlert(true);
+      setAlertContent(t("mint-desc6").toString());
+    } catch (err) {
+      console.error(err);
+      setAlert(true);
+      setAlertContent(t("mint-desc7").toString());
+    }
+  };
 
   useEffect(() => {
     setCountdown();
     activate(injectedConnector);
   }, [seconds]);
+
+  useDidMountEffect(() => {
+    if (!library) {
+      setAlert(true);
+      setAlertContent("Please install a meta mask.");
+    } else if (chainId! == 1) {
+      setAlert(true);
+      setAlertContent(t("mint-desc4").toString());
+    }
+  }, [library, alertContent, isAlert, chainId]);
 
   const setCountdown = () => {
     const targetTime = moment("2023-01-14 23:59:59");
@@ -54,11 +99,17 @@ export default function Home() {
   };
 
   const activateWallet = () => {
-    activate(injectedConnector);
+    if (!library) {
+      setAlert(true);
+      setAlertContent(t("mint-desc5").toString());
+    } else {
+      activate(injectedConnector);
+    }
   };
 
   return (
     <Layout>
+      <Alert text={alertContent} isShow={isAlert} />
       <section className="flex flex-col justify-center content-center mt-16 container sm-auto">
         <h2
           className="text-primary text-4xl xl:text-6xl font-bold flex justify-center content-center"
@@ -114,15 +165,15 @@ export default function Home() {
             100 NFT&apos;s Minted
           </p>
           <div className="flex mt-12 justify-between text-white text-xl font-thin pb-4 border-b">
-            <span>BALANCE</span>
+            <span>{t("mint-desc1")}</span>
             <p className="font-bold">1.3 ETH</p>
           </div>
           <div className="flex mt-12 justify-between text-white text-xl font-thin pb-4 border-b">
-            <span>AMOUNT</span>
+            <span>{t("mint-desc2")}</span>
             <p className="font-bold">1 EA</p>
           </div>
           <div className="flex mt-12 justify-between text-white text-xl font-thin pb-4 border-b">
-            <span>TOTAL</span>
+            <span>{t("mint-desc3")}</span>
             <p className="font-bold">1.3 ETH</p>
           </div>
           {active && (
@@ -131,7 +182,11 @@ export default function Home() {
             </p>
           )}
           {active ? (
-            <button className="bg-primary w-full text-white text-2xl tracking-wider p-4 mt-2">
+            <button
+              className="flex justify-center content-center bg-primary w-full text-white text-2xl tracking-wider p-4 mt-2"
+              onClick={mintNFT}
+            >
+              {isTx && <Loading />}
               MINT
             </button>
           ) : (
