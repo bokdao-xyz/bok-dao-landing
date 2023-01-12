@@ -16,8 +16,10 @@ import Layout from "../../components/layout";
 import MintImg from "/public/logo.png";
 import BokDaoMint from "../../utils/BokDAONFTV1.json";
 import useDidMountEffect from "../../hooks/useDidMountEffect";
-import Alert from "../../components/Alert";
 import Loading from "../../components/Loading";
+
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const getStaticProps = async ({ locale }: any) => ({
   props: {
@@ -39,13 +41,11 @@ export default function Home() {
   const [seconds, setSeconds] = useState(0);
 
   const [isTx, setTx] = useState(false);
-  const [isAlert, setAlert] = useState(false);
-  const [alertContent, setAlertContent] = useState("");
 
   const mintNFT = async () => {
     try {
       setTx(true);
-      const contracAddress = "0xC691eCC464568a62b9bf393499343cb612645459";
+      const contracAddress = "0x276619746ef001707d20845f0c9eD609c077E9A5";
       const contract = new ethers.Contract(
         contracAddress,
         BokDaoMint.abi,
@@ -59,29 +59,23 @@ export default function Home() {
 
       await nftTxn.wait();
       setTx(false);
-      setAlert(true);
-      setAlertContent(t("mint-desc6").toString());
+      toast.success(t("mint-desc6"));
     } catch (err) {
       console.error(err);
-      setAlert(true);
-      setAlertContent(t("mint-desc7").toString());
+      toast.error(t("mint-desc7"));
     }
   };
 
   useEffect(() => {
     setCountdown();
     activate(injectedConnector);
-  }, [seconds]);
+  }, []);
 
   useDidMountEffect(() => {
-    if (!library) {
-      setAlert(true);
-      setAlertContent("Please install a meta mask.");
-    } else if (chainId! == 1) {
-      setAlert(true);
-      setAlertContent(t("mint-desc4").toString());
+    if (chainId !== 1) {
+      toast.error(t("mint-desc4"));
     }
-  }, [library, alertContent, isAlert, chainId]);
+  }, [library, chainId]);
 
   const setCountdown = () => {
     const targetTime = moment("2023-01-14 23:59:59");
@@ -100,8 +94,7 @@ export default function Home() {
 
   const activateWallet = () => {
     if (!library) {
-      setAlert(true);
-      setAlertContent(t("mint-desc5").toString());
+      toast.warning(t("mint-desc5").toString());
     } else {
       activate(injectedConnector);
     }
@@ -109,7 +102,7 @@ export default function Home() {
 
   return (
     <Layout>
-      <Alert text={alertContent} isShow={isAlert} />
+      <ToastContainer />
       <section className="flex flex-col justify-center content-center mt-16 container sm-auto">
         <h2
           className="text-primary text-4xl xl:text-6xl font-bold flex justify-center content-center"
@@ -166,7 +159,11 @@ export default function Home() {
           </p>
           <div className="flex mt-12 justify-between text-white text-xl font-thin pb-4 border-b">
             <span>{t("mint-desc1")}</span>
-            <p className="font-bold">1.3 ETH</p>
+            {moment().isBefore("2023-1-16", "day") ? (
+              <p className="font-bold">1.2 ETH</p>
+            ) : (
+              <p className="font-bold">1.3 ETH</p>
+            )}
           </div>
           <div className="flex mt-12 justify-between text-white text-xl font-thin pb-4 border-b">
             <span>{t("mint-desc2")}</span>
@@ -174,7 +171,11 @@ export default function Home() {
           </div>
           <div className="flex mt-12 justify-between text-white text-xl font-thin pb-4 border-b">
             <span>{t("mint-desc3")}</span>
-            <p className="font-bold">1.3 ETH</p>
+            {moment().isBefore("2023-1-16", "day") ? (
+              <p className="font-bold">1.2 ETH</p>
+            ) : (
+              <p className="font-bold">1.3 ETH</p>
+            )}
           </div>
           {active && (
             <p className="mt-8 text-white text-sm font-thin flex justify-end">
