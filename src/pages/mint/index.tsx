@@ -29,16 +29,11 @@ export const getStaticProps = async ({ locale }: any) => ({
 
 export default function Home() {
   const injectedConnector = new InjectedConnector({
-    supportedChainIds: [1, 3, 4, 5, 42],
+    supportedChainIds: [1],
   });
   const { account, activate, active, library, chainId } =
     useWeb3React<Web3Provider>();
   const { t } = useTranslation("common");
-
-  const [days, setDays] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [mintues, setMintuess] = useState(0);
-  const [seconds, setSeconds] = useState(0);
 
   const [isTx, setTx] = useState(false);
 
@@ -67,36 +62,21 @@ export default function Home() {
       setTx(false);
       toast.success(t("mint-desc6"));
     } catch (err) {
+      setTx(false);
       console.error(err);
       toast.error(t("mint-desc7"));
     }
   };
 
-  useEffect(() => {
-    // setCountdown();
+  useDidMountEffect(() => {
     activate(injectedConnector);
   }, []);
 
   useDidMountEffect(() => {
-    if (chainId !== 1) {
+    if (chainId !== 1 && chainId !== undefined) {
       toast.error(t("mint-desc4"));
     }
-  }, [library, chainId]);
-
-  // const setCountdown = () => {
-  //   const targetTime = moment("2023-01-14 23:59:59");
-  //   const leftTime = targetTime.unix() - moment().unix();
-  //   let duration = moment.duration(leftTime, "seconds");
-  //   const interval = 1000;
-
-  //   setInterval(() => {
-  //     duration = moment.duration(duration.asSeconds() - 1, "seconds");
-  //     setDays(duration.days());
-  //     setHours(duration.hours());
-  //     setMintuess(duration.minutes());
-  //     setSeconds(duration.seconds());
-  //   }, interval);
-  // };
+  }, [chainId]);
 
   const activateWallet = () => {
     if (!library) {
