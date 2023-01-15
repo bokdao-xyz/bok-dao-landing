@@ -52,10 +52,16 @@ export default function Home() {
         library?.getSigner()
       );
 
-      const nftTxn = await contract.mintNFT({
-        gasLimit: 3000000,
-        value: ethers.utils.parseEther("0.001"),
-      });
+      let nftTxn;
+      nftTxn = moment().isBefore("2023-1-16", "day")
+        ? await contract.mintNFT({
+            gasLimit: 3000000,
+            value: ethers.utils.parseEther("1.2"),
+          })
+        : await contract.mintNFT({
+            gasLimit: 3000000,
+            value: ethers.utils.parseEther("1.3"),
+          });
 
       await nftTxn.wait();
       setTx(false);
@@ -67,7 +73,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    setCountdown();
+    // setCountdown();
     activate(injectedConnector);
   }, []);
 
@@ -77,20 +83,20 @@ export default function Home() {
     }
   }, [library, chainId]);
 
-  const setCountdown = () => {
-    const targetTime = moment("2023-01-14 23:59:59");
-    const leftTime = targetTime.unix() - moment().unix();
-    let duration = moment.duration(leftTime, "seconds");
-    const interval = 1000;
+  // const setCountdown = () => {
+  //   const targetTime = moment("2023-01-14 23:59:59");
+  //   const leftTime = targetTime.unix() - moment().unix();
+  //   let duration = moment.duration(leftTime, "seconds");
+  //   const interval = 1000;
 
-    setInterval(() => {
-      duration = moment.duration(duration.asSeconds() - 1, "seconds");
-      setDays(duration.days());
-      setHours(duration.hours());
-      setMintuess(duration.minutes());
-      setSeconds(duration.seconds());
-    }, interval);
-  };
+  //   setInterval(() => {
+  //     duration = moment.duration(duration.asSeconds() - 1, "seconds");
+  //     setDays(duration.days());
+  //     setHours(duration.hours());
+  //     setMintuess(duration.minutes());
+  //     setSeconds(duration.seconds());
+  //   }, interval);
+  // };
 
   const activateWallet = () => {
     if (!library) {
@@ -123,27 +129,8 @@ export default function Home() {
       >
         <div className="flex flex-col justify-center content-center font-semibold">
           <p className="flex justify-center content-center text-white text-3xl">
-            {days}
+            START MINT
           </p>
-          <span className="text-xs text-white">DAYS</span>
-        </div>
-        <div className="flex flex-col justify-center content-center font-semibold">
-          <p className="flex justify-center content-center text-white text-3xl">
-            {hours}
-          </p>
-          <span className="text-xs text-white">HOURS</span>
-        </div>
-        <div className="flex flex-col justify-center content-center font-semibold">
-          <p className="flex justify-center content-center text-white text-3xl">
-            {mintues}
-          </p>
-          <span className="text-xs text-white">MINUTES</span>
-        </div>
-        <div className="flex flex-col justify-center content-center font-semibold">
-          <p className="flex justify-center content-center text-white text-3xl">
-            {seconds}
-          </p>
-          <span className="text-xs text-white">SECONDS</span>
         </div>
       </section>
       <section
