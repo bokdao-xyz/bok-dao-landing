@@ -15,7 +15,6 @@ import Layout from "../../components/layout";
 
 import MintImg from "/public/logo.png";
 import BokDaoMint from "../../utils/BokDAONFTV1.json";
-import useDidMountEffect from "../../hooks/useDidMountEffect";
 import Loading from "../../components/Loading";
 
 import { toast, ToastContainer } from "react-toastify";
@@ -68,12 +67,12 @@ export default function Home() {
     }
   };
 
-  useDidMountEffect(() => {
+  useEffect(() => {
     activate(injectedConnector);
     if (chainId !== 1 && chainId !== undefined) {
       toast.error(t("mint-desc4"));
     }
-  }, [chainId]);
+  }, [activate, chainId]);
 
   const activateWallet = () => {
     if (!library) {
