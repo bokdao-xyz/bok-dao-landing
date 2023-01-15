@@ -70,9 +70,6 @@ export default function Home() {
 
   useDidMountEffect(() => {
     activate(injectedConnector);
-  }, []);
-
-  useDidMountEffect(() => {
     if (chainId !== 1 && chainId !== undefined) {
       toast.error(t("mint-desc4"));
     }
