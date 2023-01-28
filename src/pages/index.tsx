@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import YouTube from "react-youtube";
 import { useEffect } from "react";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -79,6 +80,15 @@ export default function Home() {
             {t("desc6")}
           </button>
         </Link>
+      </section>
+      <section className="mt-16" data-aos="fade-up">
+        <h2
+          className="text-primary text-4xl xl:text-6xl font-bold mb-8"
+          data-aos="fade-up"
+        >
+          Offline Event
+        </h2>
+        <YouTube videoId="UJLnk9zGAzk" opts={{ playerVars: { autoplay: 1 } }} />
       </section>
       <section className="mt-16">
         <h2
