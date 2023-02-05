@@ -49,11 +49,9 @@ export default function Home() {
       let nftTxn;
       nftTxn = moment().isBefore("2023-1-16", "day")
         ? await contract.mintNFT({
-            gasLimit: 3000000,
             value: ethers.utils.parseEther("1.2"),
           })
         : await contract.mintNFT({
-            gasLimit: 3000000,
             value: ethers.utils.parseEther("1.3"),
           });
 
