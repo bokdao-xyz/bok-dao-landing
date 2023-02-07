@@ -88,7 +88,10 @@ export default function Home() {
         >
           Offline Event
         </h2>
-        <YouTube videoId="UJLnk9zGAzk" opts={{ playerVars: { autoplay: 1 } }} />
+        <YouTube
+          videoId="UJLnk9zGAzk"
+          opts={{ playerVars: { autoplay: 1 }, width: "95%" }}
+        />
       </section>
       <section className="mt-16">
         <h2
