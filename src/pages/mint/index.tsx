@@ -52,6 +52,7 @@ export default function Home() {
             value: ethers.utils.parseEther("1.2"),
           })
         : await contract.mintNFT({
+            gasLimit: 100000,
             value: ethers.utils.parseEther("1.3"),
           });
 
