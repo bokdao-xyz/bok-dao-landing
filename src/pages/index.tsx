@@ -61,9 +61,16 @@ export default function Home() {
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
           {t("desc4")}
         </p>
-        <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
+        <p className="mt-8 text-sm xl:text-base mb-8" data-aos="fade-up">
           {t("desc5")}
         </p>
+        <a
+          href="https://medium.com/@tbjqfnb/bok-xyz-story-1ddcd841dbf1"
+          className="text-sm xl:text-base"
+          data-aos="fade-up"
+        >
+          https://medium.com/@tbjqfnb/bok-xyz-story-1ddcd841dbf1
+        </a>
       </section>
       <section className="mt-16">
         <h2
