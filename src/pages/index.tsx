@@ -108,25 +108,81 @@ export default function Home() {
           {t("title4")}
         </h2>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc7")}
+          {t("desc7")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/bokqueen0718"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @bokqueen0718
+          </a>
         </p>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc8")}
+          {t("desc8")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/iambbrone"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @iambbrone
+          </a>
         </p>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc9")}
+          {t("desc9")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/Dodori4390"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @Dodori4390
+          </a>
         </p>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc10")}
+          {t("desc10")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/godmimi3"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @godmimi3
+          </a>
         </p>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc11")}
+          {t("desc11")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/dilrong_"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @dilrong_
+          </a>
         </p>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc12")}
+          {t("desc12")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/sj_chu815"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @sj_chu815
+          </a>
         </p>
         <p className="mt-8 text-sm xl:text-base" data-aos="fade-up">
-          {t("desc13")}
+          {t("desc13")}{" "}
+          <a
+            className="hover:text-primary"
+            href="https://twitter.com/taekabow"
+            target="_blank"
+            rel="noreferrer"
+          >
+            @taekabow
+          </a>
         </p>
       </section>
     </Layout>
